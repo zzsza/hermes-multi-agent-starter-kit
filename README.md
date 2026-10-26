@@ -7,6 +7,13 @@
 ## 한눈에 보는 업무 흐름
 
 ```mermaid
+---
+config:
+  markdownAutoWrap: false
+  flowchart:
+    htmlLabels: false
+    wrappingWidth: 400
+---
 flowchart TB
     USER(["Slack에서 요청"])
 
@@ -17,7 +24,7 @@ flowchart TB
         COORD["A의 정리와 조율"]
         DECIDE{"사람 판단 필요?"}
         HUMAN["담당자 태그 후 대기"]
-        DONE(["같은&nbsp;스레드에&nbsp;답변"])
+        DONE(["같은 스레드에 답변"])
 
         A -->|"직접 처리"| COORD
         A -->|"CX 확인"| CONSULT
