@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def validate():
-    for profile, display in (("main", "Hermes A"), ("cx", "Hermes CX")):
+    for profile in ("main", "cx"):
         folder = ROOT / "templates" / profile
         config = yaml.safe_load((folder / "config.yaml").read_text())
         assert config["model"]["provider"] == "openai-codex"
@@ -65,7 +65,9 @@ def validate():
         expected["features"].pop("slash_commands")
         expected["oauth_config"]["scopes"]["bot"].remove("commands")
         assert pilot == expected, "파일럿 매니페스트에 의도하지 않은 변경이 있습니다."
-        assert pilot["display_information"]["name"] == display
+        display = pilot["display_information"]["name"]
+        assert isinstance(display, str) and display.strip(), "직원 표시 이름이 비어 있습니다."
+        assert pilot["features"]["bot_user"]["display_name"] == display, "앱과 봇 표시 이름이 다릅니다."
         assert {"channels:history", "groups:history", "files:read"}.issubset(
             pilot["oauth_config"]["scopes"]["bot"])
         assert {"app_mention", "message.channels", "message.groups", "message.im"}.issubset(

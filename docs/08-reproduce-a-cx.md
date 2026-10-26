@@ -61,7 +61,9 @@ hermes -p cx auth add openai-codex --no-browser
 
 ## 4. Slack 앱 두 개
 
-[Slack 앱 관리](https://api.slack.com/apps)에서 `Hermes A`, `Hermes CX`를 각각 생성합니다. `From a manifest`로 해당 `main.pilot.json`, `cx.pilot.json`을 사용합니다. 앱 두 개 모두 동일한 대상 워크스페이스에 설치합니다.
+메인 직원과 CX 직원의 Slack 표시 이름을 한 번 질문합니다. `Hermes A`, `Hermes CX`는 선택 가능한 기본 예시이며 확정값이 아닙니다. 이미 답한 이름은 다시 묻지 않습니다. 확정한 이름을 각 역할의 generated.json과 pilot.json의 `display_information.name`, `features.bot_user.display_name`에 동일하게 반영하고, SOUL 제목과 자기소개, 사용 안내의 멘션 예시에도 반영합니다. 내부 프로필 main과 cx는 그대로 유지합니다.
+
+[Slack 앱 관리](https://api.slack.com/apps)에서 확정한 이름으로 앱 두 개를 생성합니다. `From a manifest`로 해당 `main.pilot.json`, `cx.pilot.json`을 사용합니다. 앱 두 개 모두 동일한 대상 워크스페이스에 설치합니다.
 
 각 앱에서 Socket Mode를 켜고 `connections:write`의 app token을 만듭니다. 설치된 bot token과 app token을 정확히 해당 프로필의 `.env`에 입력합니다.
 

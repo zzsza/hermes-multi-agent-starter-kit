@@ -1,4 +1,4 @@
-# Hermes A와 CX, Slack 직원 구축 키트
+# Hermes 기반 Slack 직원 구축 키트
 
 다른 컴퓨터에서 환경을 확인하고 설치하는 데 필요한 문서, 설정 양식과 연결 플러그인입니다. **기존 사용자의 계정, 워크스페이스, 채널과 설치 상태는 가져오지 않습니다.**
 
@@ -8,26 +8,26 @@
 
 ```mermaid
 flowchart TB
-    USER(["팀원이 Slack에서 요청"])
+    USER(["Slack에서 요청"])
 
-    subgraph THREAD["처음 요청한 Slack 스레드 안에서 진행"]
-        A["@Hermes A<br/>메인 직원에게 요청"]
-        CX["@Hermes CX<br/>CX 직원에게 직접 요청"]
-        CONSULT["CX가 필요한 정보 검토"]
-        COORD["A가 결과를 정리하고 조율"]
-        DECIDE{"사람의 판단이 필요한가요?"}
-        HUMAN["지정 담당자를 태그하고 대기<br/>정책 부족, 정보 충돌, 승인 필요"]
+    subgraph THREAD["같은 Slack 스레드"]
+        A["메인 직원 A"]
+        CX["CX 직원"]
+        CONSULT["CX 검토"]
+        COORD["A의 정리와 조율"]
+        DECIDE{"사람 판단 필요?"}
+        HUMAN["담당자 태그 후 대기"]
         DONE(["같은&nbsp;스레드에&nbsp;답변"])
 
-        A -->|"직접 처리 가능"| COORD
-        A -->|"CX 확인 필요"| CONSULT
-        CONSULT -->|"검토 의견 전달"| COORD
-        CX -->|"직접 처리 가능"| DONE
-        CX -->|"조율이 필요하면 A에게 먼저 보고"| COORD
+        A -->|"직접 처리"| COORD
+        A -->|"CX 확인"| CONSULT
+        CONSULT -->|"검토 의견"| COORD
+        CX -->|"직접 처리"| DONE
+        CX -->|"조율 보고"| COORD
         COORD --> DECIDE
         DECIDE -->|"아니요"| DONE
         DECIDE -->|"네"| HUMAN
-        HUMAN -->|"담당자가 답하면 A가 이어서 정리"| DONE
+        HUMAN -->|"답변 후 A가 정리"| DONE
     end
 
     USER --> A
@@ -43,7 +43,7 @@ flowchart TB
     class DONE output;
 ```
 
-A와 CX는 각각 독립된 Hermes 프로필과 Slack 앱입니다. 연결 플러그인은 질문과 보고 전달, CX 답변 회수, 중복과 왕복 호출 제한을 담당합니다. 별도의 AI 직원은 아닙니다.
+도식의 A와 CX는 역할명이며 Slack 표시 이름은 설치할 때 한 번 질문해 정합니다. A와 CX는 각각 독립된 Hermes 프로필과 Slack 앱입니다. 연결 플러그인은 질문과 보고 전달, CX 답변 회수, 중복과 왕복 호출 제한을 담당합니다. 별도의 AI 직원은 아닙니다.
 
 한 번의 처리에서 A가 CX에게 맡긴 확인을 CX가 다시 A에게 넘기거나, CX의 조율 보고를 A가 다시 CX에게 배정하지 않습니다. 고객 발송과 데이터 변경은 현재 실행 도구가 없습니다.
 
