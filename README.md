@@ -4,6 +4,49 @@
 
 처음에는 [SETUP.md](SETUP.md)를 읽습니다. 대상 환경을 질문하고 Codex, Tailscale, Aside와 Hermes 설치를 확인한 뒤 Slack 대상과 계정을 질문합니다. 필요한 답변을 받기 전에 ID를 채우거나 메시지를 보내지 않습니다.
 
+## 한눈에 보는 업무 흐름
+
+```mermaid
+flowchart TB
+    USER(["팀원이 Slack에서 요청"])
+
+    subgraph THREAD["처음 요청한 Slack 스레드 안에서 진행"]
+        A["@Hermes A<br/>메인 직원에게 요청"]
+        CX["@Hermes CX<br/>CX 직원에게 직접 요청"]
+        CONSULT["CX가 필요한 정보 검토"]
+        COORD["A가 결과를 정리하고 조율"]
+        DECIDE{"사람의 판단이 필요한가요?"}
+        HUMAN["지정 담당자를 태그하고 대기<br/>정책 부족, 정보 충돌, 승인 필요"]
+        DONE(["같은 스레드에 답변"])
+
+        A -->|"직접 처리 가능"| COORD
+        A -->|"CX 확인 필요"| CONSULT
+        CONSULT -->|"검토 의견 전달"| COORD
+        CX -->|"직접 처리 가능"| DONE
+        CX -->|"조율이 필요하면 A에게 먼저 보고"| COORD
+        COORD --> DECIDE
+        DECIDE -->|"아니요"| DONE
+        DECIDE -->|"네"| HUMAN
+        HUMAN -->|"담당자가 답하면 A가 이어서 정리"| DONE
+    end
+
+    USER --> A
+    USER --> CX
+
+    classDef person fill:#fff1d6,stroke:#b7791f,color:#553300;
+    classDef main fill:#e9e7ff,stroke:#7060c4,color:#30245e;
+    classDef cx fill:#dcf5ee,stroke:#27866c,color:#164e40;
+    classDef output fill:#eef2f6,stroke:#64748b,color:#243247;
+    class USER,HUMAN person;
+    class A,COORD,DECIDE main;
+    class CX,CONSULT cx;
+    class DONE output;
+```
+
+A와 CX는 각각 독립된 Hermes 프로필과 Slack 앱입니다. 연결 플러그인은 질문과 보고 전달, CX 답변 회수, 중복과 왕복 호출 제한을 담당합니다. 별도의 AI 직원은 아닙니다.
+
+한 번의 처리에서 A가 CX에게 맡긴 확인을 CX가 다시 A에게 넘기거나, CX의 조율 보고를 A가 다시 CX에게 배정하지 않습니다. 고객 발송과 데이터 변경은 현재 실행 도구가 없습니다.
+
 ## 읽는 순서
 
 | 자료 | 목적 |
