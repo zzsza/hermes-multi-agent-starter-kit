@@ -9,9 +9,9 @@
 ```mermaid
 ---
 config:
+  htmlLabels: false
   markdownAutoWrap: false
   flowchart:
-    htmlLabels: false
     wrappingWidth: 400
 ---
 flowchart TB
