@@ -1,0 +1,61 @@
+model:
+  provider: openai-codex
+  default: gpt-6-astra
+platform_toolsets:
+  cli:
+  - todo
+  - clarify
+  slack:
+  - todo
+  - clarify
+  - cx_consult
+approvals:
+  mode: manual
+  timeout: 60
+  cron_mode: deny
+command_allowlist: []
+terminal:
+  backend: docker
+  cwd: /workspace
+memory:
+  memory_enabled: false
+  user_profile_enabled: false
+auxiliary:
+  vision:
+    provider: codex
+    model: gpt-6-astra
+  web_extract:
+    provider: codex
+    model: gpt-6-astra
+  compression:
+    provider: codex
+    model: gpt-6-astra
+  session_search:
+    provider: codex
+    model: gpt-6-astra
+  title_generation:
+    provider: codex
+    model: gpt-6-astra
+fallback_providers: []
+platforms:
+  slack:
+    extra:
+      reply_in_thread: true
+      require_mention: true
+      strict_mention: false
+      free_response_channels: []
+      allow_bots: mentions
+      allow_admin_from: []
+      group_allow_admin_from: []
+      user_allowed_commands:
+      - help
+      - whoami
+      group_user_allowed_commands:
+      - help
+      - whoami
+    gateway_restart_notification: false
+plugins:
+  enabled:
+  - cx-thread-bridge
+agent:
+  max_turns: 8
