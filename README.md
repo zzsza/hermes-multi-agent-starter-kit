@@ -17,7 +17,7 @@ flowchart TB
         COORD["A가 결과를 정리하고 조율"]
         DECIDE{"사람의 판단이 필요한가요?"}
         HUMAN["지정 담당자를 태그하고 대기<br/>정책 부족, 정보 충돌, 승인 필요"]
-        DONE(["같은 스레드에 답변"])
+        DONE(["같은&nbsp;스레드에&nbsp;답변"])
 
         A -->|"직접 처리 가능"| COORD
         A -->|"CX 확인 필요"| CONSULT
